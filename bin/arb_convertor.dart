@@ -4,8 +4,9 @@ import 'dart:io';
 import 'apps_data.dart';
 import 'marketing_data.dart';
 
-void saveToArb(Map<String, dynamic> difference, String filePath) {
-  var arbContent = '{\n  "@@locale": "en",\n';
+void saveToArb(
+    Map<String, dynamic> difference, String filePath, String locale) {
+  var arbContent = '{\n  "@@locale": "$locale",\n';
   difference.forEach((key, value) {
     arbContent += '  "$key": "${value.toString()}",\n';
   });
@@ -35,7 +36,9 @@ Map<String, dynamic> compareMaps(
 
 void main() {
   // Сравниваем их и сохраняем различия в файл
-  Map<String, dynamic> difference =
-      compareMaps(MarketingData.marketingData, AppsData.appsData);
-  saveToArb(difference, "difference.arb");
+  Map<String, dynamic> difference = compareMaps(
+    MarketingData.marketingData,
+    AppsData.appsData,
+  );
+  saveToArb(difference, "difference.arb", 'ru');
 }
